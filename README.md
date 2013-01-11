@@ -38,10 +38,10 @@ Planning phase. Getting the goals right. Finding the right technoloy. Pretty muc
 
 ### Version 0.1 ###
 
-0.  ☐ Basic source file layout
-1.  ☐ Write regression tests against other markdown implementations.
-2.  ☐ Writing a simple markdown parser in pyparsing
-3.  ☐ Performance check
+- [ ] Basic source file layout
+- [ ] Write regression tests against other markdown implementations.
+- [ ] Writing a simple markdown parser in pyparsing
+- [ ] Performance check
 
 
 
@@ -68,7 +68,7 @@ Planning phase. Getting the goals right. Finding the right technoloy. Pretty muc
 *   Simple computations in tables like a mini spreadsheet
 *   Shell out, if you really have to `{%sh echo "spam" %}`  
     (However, I would avoid using this as long as you can embed the output as an image or plain text and use `make` or another build system to decide when to build what.)
-
+*   [Task lists a la github](https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments)
 
 
 
