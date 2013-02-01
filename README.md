@@ -4,48 +4,22 @@ This project is experimental and in flux. Stay tuned an/or join us ;-)
 
 ### _Remarkable_ is the new Markdown. ###
 
+#### General Features ####
 
-*   a superset of [Markdown] and [MultiMarkdown]
-*   downwards compatible
+*   open source
+*   open framework for plugins, invoked depending on their `{% tag %}`
+*   downwards compatible, i.e. a superset of [Markdown] and [MultiMarkdown]
+*   providing access to the parse tree (DOM) (use it as a library)
+*   a Markdown preprocessor or stand-alone md replacement
 *   richer self-contained documents
 *   include or embed other text files
 *   ready for web-publication beyond images and quotes
-*   computable documents by allowing [Python] code `${import math; math.pi}`
-*   clean pure [Python] implementation instead of a huge f.?ck(i)ng RegEx
-*   an open framework for plugins, invoked depending on their `{% tag %}`
+*   a computable document by allowing [Python] code `${import math; math.pi}`
+*   clean pure [Python] parser instead of a huge f.?ck(i)ng RegEx
 *   plugins have access to the parsing tree (DOM)
-*   a plugin-collection to enhance Markdown functionality
+*   a plugin-collection to extend Markdown functionality
 
-_Remarkable_ is inspired by [MultiMarkdown], [Pandoc], [markdown2.py], [Jinja2], Octopress and others. Adding your own new tags and features is easy.
-
-
-### More on Markdown ###
-
-[Markdown] is designed to be a "easy-to-read, easy-to-write plain text format" that looks nice in plain text but still defines markup in a machine readable manner to create pleasing output. These properties render it perfect for syncing, version control, exchanging notes with colleagues, avoiding lock-ins.
-
-*   [What is Markdown and why is it better for my to do lists and notes](http://lifehacker.com/5943320/what-is-markdown-and-why-is-it-better-for-my-to+do-lists-and-notes)
-*   [Dr. Drang's thoughts on Markdown](http://www.leancrew.com/all-this/2010/10/thoughts-on-markdown/)
-
-
-
-## Status ##
-
-Planning phase. Getting the goals right. Finding the right technoloy. Pretty much experimenting around.
-
-
-
-## Roadmap ##
-
-### Version 0.1 ###
-
-0.  ☐ Basic source file layout
-1.  ☐ Write regression tests against other markdown implementations.
-2.  ☐ Writing a simple markdown parser in pyparsing
-3.  ☐ Performance check
-
-
-
-## Some plugins I want to be possible with _Remarkable_: ##
+#### Specific Features (via included plug-ins (planned)) ####
 
 *   Generated table of contents with links
     -   The output of `{% toc %}` should be markdown links to the headings.
@@ -63,33 +37,43 @@ Planning phase. Getting the goals right. Finding the right technoloy. Pretty muc
         %}
 
 *   Bibliography and citing
-*   A recipe plugin that generates embedded JavaScript to dynamically compute the amounts of the ingredients when one changes the number of persons.
+*   A recipe plugin that generates embedded JavaScript to dynamically
+    compute the amounts of the ingredients when one changes the number of
+    persons.
 *   Integration with Python/IPython
 *   Simple computations in tables like a mini spreadsheet
 *   Shell out, if you really have to `{%sh echo "spam" %}`  
     (However, I would avoid using this as long as you can embed the output as an image or plain text and use `make` or another build system to decide when to build what.)
 
+_Remarkable_ is inspired by [MultiMarkdown], [Pandoc], [markdown2.py], [Jinja2], Octopress and others. Adding your own new tags and features is easy.
+
+
+### More on Markdown ###
+
+[Markdown] is designed to be a "easy-to-read, easy-to-write plain text format" that looks nice in plain text but still defines markup in a machine readable manner to create pleasing output. These properties render it perfect for syncing, version control, exchanging notes with colleagues, avoiding lock-ins.
+
+*   [What is Markdown and why is it better for my to do lists and notes](http://lifehacker.com/5943320/what-is-markdown-and-why-is-it-better-for-my-to+do-lists-and-notes)
+*   [Dr. Drang's thoughts on Markdown](http://www.leancrew.com/all-this/2010/10/thoughts-on-markdown/)
 
 
 
+## Status ##
+
+Planning phase. Getting the goals right. Finding the right technoloy. Pretty much experimenting around.
+
+## Roadmap ##
+
+### Version 0.1 ###
+
+0.  ☐ Basic source file layout
+1.  ☐ Write regression tests against other markdown implementations.
+2.  ☐ Writing a simple markdown parser in [pyparsing]
+3.  ☐ Performance check
 
 
-# Design Goals & Features #
+# Tags #
 
-## This tool should work in two modes ##
-
-1.   As a preprocessor for Markdown files, thus being independent of other markdown implementations
-2.   As a stand-alone markdown replacement
-
-The mode 1) has the draw-back that already expanded tags will be processed by markdown and therefore must be wrapped in HTML elements or code blocks if they should not be touched by other markdown programs.
-However, this can also be beneficial; think of a table of contents plugin which scans the file and generates markdown links to the captions.
-Additionally, mode 1) would probably need another file extension (`.rmmd` for "ReMarkable MarkDown" is free) so that `my.rmmd` → `my.md`
-→ `my.html`. However, I'd like to avoid that by embedding the output of a plugin alongside with it's command (see below).
-
-Mode 2) would allow for post-processing hooks, too.
-
-
-## Tags ##
+Remakrable calls plugins on certain tags.
 
 *   `{%TAG(ARGS) --> EVALUATED %}`  
     This is the most general form. The parenthesis is optional and spaces or newlines are allowed. The `-->` will be automatically added. 
@@ -106,15 +90,15 @@ Mode 2) would allow for post-processing hooks, too.
     
 *   Alternative opening/closing tags
     to optionally make the plugin instructions invisible if you use another markdown converter.
-    - Instead of `{%`: `<!--{%` or `<!-- {%`
-    - Instead of `%}`: `<!--%}-->` or `<!-- %} -->`
+    - Instead of `{%`: `<!--{%`
+    - Instead of `%}`: `<!--%}-->`
 
 *   ``` $`foo="spam"` ```  
     to show Python code and evaluate it but **without** inserting the result.
 
 *   `${foo}`  
     to insert the value of a Python variable (or function). 
-    Example: This is ${foo}! will result to: "This is spam"
+    Example: This is ${foo}! will result to: "This is spam!"
 
 *   `{{foo}}`  
     to show the Python code, evaluate it and insert the result.
@@ -205,3 +189,4 @@ else:
 [markdown2.py]: https://github.com/trentm/python-markdown2
 [Jinja2]: http://jinja.pocoo.org
 [Python]: http://www.python.org/
+[pyparsing]: http://pyparsing.wikispaces.com/HowToUsePyparsing
